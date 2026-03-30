@@ -1006,17 +1006,26 @@
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // Scroll reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 80);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  const reveals=document.querySelectorAll('.reveal');
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach((entry,i)=>{
+    if(entry.isIntersecting){
+      setTimeout(()=>entry.target.classList.add('visible'),i*80);
+      observer.unobserve(entry.target);
+    }
+  });
+},{threshold:0.05,rootMargin:'0px 0px -100px 0px'});
+reveals.forEach(el=>observer.observe(el));
 
-  reveals.forEach(el => observer.observe(el));
+// Trigger reveals on page load
+window.addEventListener('load',()=>{
+  reveals.forEach(el=>{
+    const rect=el.getBoundingClientRect();
+    if(rect.top<window.innerHeight){
+      el.classList.add('visible');
+    }
+  });
+});
 
   // Update Paris event status after the date
   const parisEvent = document.querySelector('.event-item:first-child .event
